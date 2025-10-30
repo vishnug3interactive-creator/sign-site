@@ -1,13 +1,17 @@
-import { Box } from '@mui/material'
-import React from 'react'
+
+import React from "react";
+import JobModal from "../../components/JobModal";
+
 
 function HomePage() {
+
   return (
-   <Box sx={{display:'flex',justifyContent:'center'}}
-   >
-hello
-   </Box>
-  )
+   <>
+        <div className="job-button">
+                <JobModal/>
+        </div>
+   </>
+  );
 }
 
-export default HomePage
+export default HomePage;
