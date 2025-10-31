@@ -1,0 +1,13 @@
+import axios from 'axios';
+
+const instance = axios.create({
+  baseURL: 'http://13.210.33.250/api/', 
+  timeout: 5000, 
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOTExZGE1MmVmMDJiNGIxMmVjYWRkYzI5ZTc0N2YwMTI4MjJlZmIzN2JjMDA0YzEzOGFiZjU3NjJiMDE1MDc1NjUwNDE4NDUzMDBmMTBkOGUiLCJpYXQiOjE3NjE5MDU0MzYuOTE5MTU1LCJuYmYiOjE3NjE5MDU0MzYuOTE5MTYyLCJleHAiOjE3NjIwNzgyMzYuOTA4NDk3LCJzdWIiOiIwMWswYmQxaDdqanhzdjZwMW1kcm43aDBhciIsInNjb3BlcyI6W119.ixKuL7QD7CmWZD4eLQQiHqZ4F12H_27_3WlLND9rD9tMJCRqjSZ2KL8SofpwmAVVHXJ8NAQ9ga-IXbnZr2NzwP30c1eZILuiPPwa8fcl-BbVsnTy_3ZJPaA2DjBnkauFgWoQQU2LPs4sKFayXi6obMB0Bj0JkWtN9SP2-Dd7SOJjpysLOoS2OeBEWWLZnEJibvGS5ElhwXRztOkybK8xUEEE5srqs-27iFR2ZMKEfuO-4EO0ereQRXVP75VxSqdtlvyTiI1MNXlneiKRKCkl2B3tmmILnS8aISkF3eSOFbVsvjrO0Bm9Ch_7-8ujE4YXd6Kk4hNEmw85b_-PAYlYBk3gBri8srt30vrVDPGOi1HmSnwaldFbMvAvcTXu7qPM879VHHECJ6oWlyOBnqzlmZXPkTXc7n98Tj9dWBGfJobHX-9WvaxYPqGsfe-D5vieDIkJ-ONSN_dzdqMFuzWes2JuLCSgJNspoA7OaSggWFJ3ktOZjDS97lwrwlvCLBNqIMO7TZ6Y-H2zgkV2wikw9gBpeXCnp-ShzAb-tB9tEwmlJFRzlU36zy4Yu19ZN1acRpPkye2w-qU3CeG1IAfWk5TAal1ctXbyGtcn3sRRDQxzPCaB3AuXaj3agDmIQ_O5sW1uXwgnxs1twNP_kKaRCoffeiRlg4z2fMQEHlRVe5I' ,
+    'company_id':'01k0bd1gyjptcmwrnyg128vgar'
+  }
+});
+
+export default instance;

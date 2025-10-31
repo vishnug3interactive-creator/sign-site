@@ -12,24 +12,25 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 const ariaLabel = { "aria-label": "description" };
-import FormatBoldIcon from "@mui/icons-material/FormatBold";
-import FormatItalicIcon from "@mui/icons-material/FormatItalic";
-import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
-import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Editor } from "primereact/editor";
+import { InputTextarea } from "primereact/inputtextarea";
+import Calender from "../assets/icons/calendar.png";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
 export const GroupField = ({}) => {
-  const rows = [createData("Frozen yoghurt", 159, 6.0, 24, 4.0)];
+  const rows = [createData("Lorem ip - Apparel", 1, '$12.50', '$12.50')];
   return (
     <>
       <Box>
@@ -125,12 +126,15 @@ export const NormalTextField = ({
   );
 };
 
-export const TextAreaField = ({}) => {
-  const [formats, setFormats] = React.useState(() => ["bold", "italic"]);
+export const TextAreaField = ({
+  name,
+  label,
+  placeholder,
+  value,
+  handleChange,
+}) => {
+  // const [text, setText] = useState('');
 
-  const handleFormat = (event, newFormats) => {
-    setFormats(newFormats);
-  };
   return (
     <>
       <Box>
@@ -143,29 +147,26 @@ export const TextAreaField = ({}) => {
             fontFamily: "Nunito",
           }}
         >
-          Description
+          {label}
         </Typography>
       </Box>
-      <Box sx={{ border: "1px solid #D1D5DB", height: "6.875rem" ,borderRadius:'8px'}}>
-        <ToggleButtonGroup
-          value={formats}
-          onChange={handleFormat}
-          aria-label="text formatting"
-        >
-          <ToggleButton value="bold" aria-label="bold">
-            <FormatBoldIcon />
-          </ToggleButton>
-          <ToggleButton value="italic" aria-label="italic">
-            <FormatItalicIcon />
-          </ToggleButton>
-          <ToggleButton value="underlined" aria-label="underlined">
-            <FormatUnderlinedIcon />
-          </ToggleButton>
-          <ToggleButton value="color" aria-label="color" disabled>
-            <FormatColorFillIcon />
-            <ArrowDropDownIcon />
-          </ToggleButton>
-        </ToggleButtonGroup>
+      <Box
+        sx={{
+          border: "1px solid #D1D5DB",
+          // height: "6.875rem",
+          borderRadius: "8px",
+        }}
+      >
+        <Editor
+          value={value || ""}
+          onTextChange={(e) =>
+            handleChange({
+              target: { name, value: e.htmlValue },
+            })
+          }
+          placeholder={placeholder}
+          style={{ minHeight: "8.875rem" }}
+        />
       </Box>
     </>
   );
@@ -177,14 +178,9 @@ export const NormalDropdown = ({
   value,
   handleChange,
   options = [],
-  placeholder = "Select an option",
+  placeholder,
   lineHeight,
 }) => {
-     const [age, setAge] = React.useState('');
-
-  const handleChangeDropdown = (event) => {
-    setAge(event.target.value);
-  };
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
       {label && (
@@ -209,25 +205,201 @@ export const NormalDropdown = ({
           color: "#111827",
           display: "flex",
           alignItems: "center",
+        }}
+      >
+        <Box sx={{ minWidth: "23.25rem" }}>
+          <FormControl fullWidth>
+            {/* <Select
+            name={name}
+            value={value}
+            onChange={handleChange}
+            >
+              <MenuItem value="" disabled>
+              {placeholder}
+            </MenuItem>
+             {options.map((option, index) => (
+              <MenuItem key={index} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+            </Select> */}
+            <Select
+              name={name}
+              value={value ?? ""}
+              onChange={handleChange}
+              displayEmpty
+              sx={{
+                height: "3.125rem",
+                fontFamily: "Nunito",
+                fontSize: "1rem",
+                color: "#111827",
+              }}
+            >
+              <MenuItem value="">{placeholder}</MenuItem>
+
+              {options.map((option, index) => (
+                <MenuItem key={index} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export const MultiLineText = ({ label, name, value, handleChange }) => {
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+      {label && (
+        <Typography
+          sx={{
+            fontSize: "1rem",
+            fontWeight: 500,
+            lineHeight: "1.5rem",
+            color: "#4B5563",
+            fontFamily: "Nunito",
+          }}
+        >
+          {label}
+        </Typography>
+      )}
+
+      <Box
+        sx={{
+          display: "flex",
+        }}
+      >
+        <Box
+          sx={{
+            border: "1px solid #D1D5DB",
+            borderRadius: "8px",
+            minWidth: "23.25rem",
+          }}
+        >
+          <InputTextarea
+            autoResize
+            name={name}
+            value={value}
+            onChange={handleChange}
+            rows={5}
+            cols={30}
+            style={{
+              border: "none",
+              outline: "none",
+              boxShadow: "none",
+            }}
+          />
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export const DateFieldSelecter = ({
+  label,
+  name,
+  value,
+  handleChange,
+  placeholder,
+  lineHeight,
+}) => {
+    const handleDateChange = (date) => {
+    if (handleChange) {
+      handleChange({
+        target: {
+          name,
+          value: date,
+        },
+      });
+    }
+  };
+  
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+      {label && (
+        <Typography
+          sx={{
+            fontSize: "1rem",
+            fontWeight: 500,
+            lineHeight: lineHeight || "1.5rem",
+            color: "#4B5563",
+            fontFamily: "Nunito",
+          }}
+        >
+          {label}
+        </Typography>
+      )}
+
+      <Box
+        sx={{
+          border: "1px solid #D1D5DB",
+          borderRadius: "8px",
+          color: "#111827",
+          background: "none",
+          height: "3.125rem",
+          display: "flex",
+          alignItems: "center",
           padding: "0 12px",
         }}
       >
-    <Box sx={{ minWidth: '23.25rem' }}>
-      <FormControl fullWidth>
-                {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-
-        <Select
-        //   label="Age"
-          onChange={handleChangeDropdown}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
-    
+        <Box sx={{ position: "relative", width: "100%" }}>
+          <DatePicker
+           selected={value || null} 
+            name={name}
+            // value={value}
+            onChange={handleDateChange}
+            placeholderText={placeholder}
+            dateFormat="dd/MM/yyyy"
+            className="custom-datepicker"
+          />
+          
+          <Box
+            component="img"
+            src={Calender}
+            alt="calendar icon"
+            sx={{
+              position: "absolute",
+              right: "12px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: "20px",
+              height: "20px",
+              pointerEvents: "none",
+            }}
+          />
+        </Box>
       </Box>
+
+      <style>{`
+        .custom-datepicker {
+          width: 100%;
+          height: 100%;
+          border: none;
+          outline: none;
+          background: transparent;
+          font-family: Nunito, sans-serif;
+          font-size: 1rem;
+          color: #111827;
+        }
+
+        .react-datepicker-wrapper {
+          width: 100%;
+        }
+
+        .react-datepicker__input-container input {
+          width: 100%;
+          height: 100%;
+          border: none;
+          outline: none;
+          background: transparent;
+          font-family: Nunito, sans-serif;
+          font-size: 1rem;
+          color: #111827;
+        }
+      `}</style>
     </Box>
   );
 };
